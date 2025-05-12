@@ -14,6 +14,8 @@
    **Chained Requests with Dynamic Variables**:
   - Stored `productID` and `orderID` from responses.
   - Passed them into subsequent requests dynamically using environment variables.
+  - ![image](https://github.com/user-attachments/assets/be6cfdd5-0a10-45cf-85d4-c0461735046f)
+
   - ![new cart](https://github.com/user-attachments/assets/0c2b747c-67be-43bb-9f63-109939976390)
   - ![make an order](https://github.com/user-attachments/assets/f19e6e6a-3286-4afd-874d-2330bd2dfa3d)
 
