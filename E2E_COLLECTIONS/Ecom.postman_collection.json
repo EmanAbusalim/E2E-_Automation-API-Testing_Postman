@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "9382138d-19a4-4c36-8840-aeddc079feec",
+		"name": "Ecom",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38812853",
+		"_collection_link": "https://www.postman.com/api-testing-practices/workspace/ete-flows/collection/38812853-9382138d-19a4-4c36-8840-aeddc079feec?action=share&source=collection_link&creator=38812853"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response;\r",
+							"const jsonres = res.json();\r",
+							"//check if the response has token\r",
+							"pm.test(\"token is not undefined\",function(){\r",
+							"    pm.expect(res.json().token).to.not.be.undefined;\r",
+							"});\r",
+							"// store token if it is present\r",
+							"if(jsonres.token!= undefined){\r",
+							"    pm.collectionVariables.set(\"token\",jsonres.token);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"test if the response have user id\",function(){\r",
+							"    pm.expect(jsonres.userId).to.not.be.undefined;\r",
+							"})\r",
+							"//store  userid in collection variables\r",
+							"\r",
+							"\r",
+							"if(jsonres.userId!=undefined){\r",
+							"    pm.collectionVariables.set(\"userId\",jsonres.userId);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"userEmail\": \"myrealpersonality60@gmail.com\",\r\n \"userPassword\": \"#A123456789l\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/auth/login?",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"Token is:\", pm.collectionVariables.get(\"token\"));\r",
+							"const res = pm.response;\r",
+							"const jsonres = res.json();\r",
+							"pm.test(\"assert user id\",function(){\r",
+							"    pm.expect(pm.collectionVariables.get(\"userId\")).to.not.be.undefined;\r",
+							"    pm.expect(pm.collectionVariables.get(\"userId\")).to.not.be.null;\r",
+							"})\r",
+							"// assert status code \r",
+							"\r",
+							"\r",
+							"pm.test(\"check status code\",function(){\r",
+							"    res.to.have.status(201);\r",
+							"    pm.expect(res.status).to.equal(\"Created\");\r",
+							"})\r",
+							"pm.test(\"make sure of productId\",function(){\r",
+							"pm.expect(jsonres.productId).to.not.be.undefined;\r",
+							"});\r",
+							"if(jsonres.productId!=undefined){\r",
+							"    pm.collectionVariables.set(\"product_id\",jsonres.productId);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "productName",
+							"value": "qwerty",
+							"type": "text"
+						},
+						{
+							"key": "productAddedBy",
+							"value": "{{userId}}",
+							"type": "text"
+						},
+						{
+							"key": "productCategory",
+							"value": "fashion",
+							"type": "text"
+						},
+						{
+							"key": "productSubCategory",
+							"value": "shirts",
+							"type": "text"
+						},
+						{
+							"key": "productPrice",
+							"value": "11500",
+							"type": "text"
+						},
+						{
+							"key": "productDescription",
+							"value": "Addias Originals",
+							"type": "text"
+						},
+						{
+							"key": "productFor",
+							"value": "women",
+							"type": "text"
+						},
+						{
+							"key": "productImage",
+							"type": "file",
+							"src": "/C:/Users/Tweety/Desktop/image.png"
+						}
+					]
+				},
+				"url": "{{base_url}}{{create_product}}",
+				"description": "this request is mandatory before making an order because the products are not stable in the website its meant for education purpose so more students are using it at the same time updating products ,i create the product in special request and the same product to be my order in the next request\n\n\\[if gte mso 9\\]>\n\n\\[if gte mso 9\\]>\n\nNormal  \n0\n\nfalse  \nfalse  \nfalse\n\nEN-US  \nX-NONE  \nAR-SA\n\n\\[if gte mso 9\\]>\n\n\\[if gte mso 10\\]>\n\nStartFragment\n\n<u><b>Create Product Contract</b></u> **–**\n\n**End point –**\n\n[<b>https://rahulshettyacademy.com/api/ecom/product/add-product</b>](https://rahulshettyacademy.com/api/ecom/product/add-product)\n\n**Http Method - POST**\n\n<u><b>Form Data -</b></u>\n\n**productName:qwerty**\n\n**productAddedBy:{{userId}}**\n\n**productCategory:fashion**\n\n**productSubCategory:shirts**\n\n**productPrice:11500**\n\n**productDescription:Addias Originals**\n\n**productFor:women**\n\nthis was the documntation for the request"
+			},
+			"response": []
+		},
+		{
+			"name": "Make an Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response;\r",
+							"const jsonres = res.json();\r",
+							"pm.test(\"order placed Successfully\",function(){\r",
+							"    pm.expect(jsonres.message).to.include(\"Successfully\");\r",
+							"});\r",
+							"\r",
+							"// assert status of response\r",
+							"pm.test(\"assert status\",function(){\r",
+							"    res.to.have.status(201);\r",
+							"        pm.expect(res.status).to.equal(\"Created\");\r",
+							"\r",
+							"});\r",
+							"//get the order id and pass it for the collection variables\r",
+							"pm.collectionVariables.set(\"order_id\",jsonres.orders);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orders\": \r\n          [\r\n            {\r\n                \"country\": \"Egypt\",\r\n                 \"productOrderedId\": \"{{product_id}}\"\r\n                 }\r\n                  ]\r\n    \r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}{{make_order}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Review an Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res=pm.response;\r",
+							"const jsonres=res.json();\r",
+							"const data=jsonres.data; //access the data object from the response body\r",
+							"\r",
+							"pm.test(\"assert the status\",function(){\r",
+							"\r",
+							"pm.expect(res.status).to.equal(\"OK\");\r",
+							" res.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"check the message\",function(){\r",
+							"pm.expect(jsonres.message).to.include(\"Orders fetched\");\r",
+							"});\r",
+							"pm.test(\"check the order data\"),function(){\r",
+							"\r",
+							"    pm.expect(data.orderById).to.not.be.null;\r",
+							"    pm.expect(data.orderById).to.equal(pm.collectionVariables.get(order_id));\r",
+							"    pm.expect(data.oproductOrderedId).to.equal(pm.collectionVariables.get(product_id));\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}{{view_order}}?id={{order_id}}",
+					"host": [
+						"{{base_url}}{{view_order}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{order_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.to.have.status(200);\r",
+							"pm.test(\"test status word\",function(){\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"pm.test(\"assert delete message\",function(){\r",
+							"    pm.expect(pm.response.json().message).to.include(\"Successfully\")\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": "{{base_url}}{{delete_order}}{{order_id}}"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "order_id",
+			"value": ""
+		},
+		{
+			"key": "product_id",
+			"value": ""
+		}
+	]
+}
